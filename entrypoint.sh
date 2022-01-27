@@ -15,7 +15,6 @@ ESLINT_FORMATTER="./formatter.cjs"
 GITHUB_TOKEN=$INPUT_TOKEN
 
 # shellcheck disable=SC2034
-export REVIEWDOG_GITHUB_API_TOKEN=$GITHUB_TOKEN
 CONFIG_PATH=$INPUT_CONFIG_PATH
 IGNORE_PATH=$INPUT_IGNORE_PATH
 EXTENSIONS=${INPUT_EXTENSIONS// /}
@@ -30,18 +29,10 @@ if [[ "$INPUT_ALL_FILES" == "true" ]]; then
   if [[ -n ${IGNORE_PATH} ]]; then
     echo "Using ignore path: $IGNORE_PATH"
     # shellcheck disable=SC2086
-    npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . | reviewdog -f=rdjson \
-      -name=eslint \
-      -reporter=local \
-      -filter-mode=nofilter \
-      -fail-on-error && exit_status=$? || exit_status=$?
+    npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . || exit_status=$?
   else
     # shellcheck disable=SC2086
-    npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . | reviewdog -f=rdjson \
-      -name=eslint \
-      -reporter=local \
-      -filter-mode=nofilter \
-      -fail-on-error && exit_status=$? || exit_status=$?
+    npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}"  || exit_status=$?
   fi
   echo "::endgroup::"
 else
@@ -123,18 +114,10 @@ else
       if [[ -n ${IGNORE_PATH} ]]; then
         echo "Using ignore path: $IGNORE_PATH"
         # shellcheck disable=SC2086
-        npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" $CHANGED_FILES | reviewdog -f=rdjson \
-          -name=eslint \
-          -reporter=local \
-          -filter-mode=nofilter \
-          -fail-on-error && exit_status=$? || exit_status=$?
+        npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" $CHANGED_FILES || exit_status=$?
       else
         # shellcheck disable=SC2086
-        npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" $CHANGED_FILES | reviewdog -f=rdjson \
-          -name=eslint \
-          -reporter=local \
-          -filter-mode=nofilter \
-          -fail-on-error && exit_status=$? || exit_status=$?
+        npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" $CHANGED_FILES || exit_status=$?
       fi
       echo "::endgroup::"
 
