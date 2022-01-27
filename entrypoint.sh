@@ -32,14 +32,14 @@ if [[ "$INPUT_ALL_FILES" == "true" ]]; then
     # shellcheck disable=SC2086
     npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . | reviewdog -f=rdjson \
       -name=eslint \
-      -reporter=github-pr-check \
+      -reporter=local \
       -filter-mode=nofilter \
       -fail-on-error && exit_status=$? || exit_status=$?
   else
     # shellcheck disable=SC2086
     npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . | reviewdog -f=rdjson \
       -name=eslint \
-      -reporter=github-pr-check \
+      -reporter=local \
       -filter-mode=nofilter \
       -fail-on-error && exit_status=$? || exit_status=$?
   fi
