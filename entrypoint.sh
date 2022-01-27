@@ -29,10 +29,10 @@ if [[ "$INPUT_ALL_FILES" == "true" ]]; then
   if [[ -n ${IGNORE_PATH} ]]; then
     echo "Using ignore path: $IGNORE_PATH"
     # shellcheck disable=SC2086
-    npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . || exit_status=$?
+    npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} . || exit_status=$?
   else
     # shellcheck disable=SC2086
-    npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}"  || exit_status=$?
+    npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS}  || exit_status=$?
   fi
   echo "::endgroup::"
 else
@@ -114,10 +114,10 @@ else
       if [[ -n ${IGNORE_PATH} ]]; then
         echo "Using ignore path: $IGNORE_PATH"
         # shellcheck disable=SC2086
-        npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" $CHANGED_FILES || exit_status=$?
+        npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} $CHANGED_FILES || exit_status=$?
       else
         # shellcheck disable=SC2086
-        npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" $CHANGED_FILES || exit_status=$?
+        npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} $CHANGED_FILES || exit_status=$?
       fi
       echo "::endgroup::"
 
