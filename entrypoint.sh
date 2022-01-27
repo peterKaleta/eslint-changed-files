@@ -30,18 +30,10 @@ if [[ "$INPUT_ALL_FILES" == "true" ]]; then
   if [[ -n ${IGNORE_PATH} ]]; then
     echo "Using ignore path: $IGNORE_PATH"
     # shellcheck disable=SC2086
-    npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . | reviewdog -f=rdjson \
-      -name=eslint \
-      -reporter=local \
-      -filter-mode=nofilter \
-      -fail-on-error && exit_status=$? || exit_status=$?
+    npx eslint --config="${CONFIG_PATH}" --ignore-path="${IGNORE_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" .
   else
     # shellcheck disable=SC2086
-    npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . | reviewdog -f=rdjson \
-      -name=eslint \
-      -reporter=local \
-      -filter-mode=nofilter \
-      -fail-on-error && exit_status=$? || exit_status=$?
+    npx eslint --config="${CONFIG_PATH}" ${EXTRA_ARGS} -f="${ESLINT_FORMATTER}" . 
   fi
   echo "::endgroup::"
 else
